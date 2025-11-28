@@ -26,15 +26,12 @@ jobs:
           sudo apt update
           sudo apt install -y git wget python3 python3-pip cmake
 
-      - name: Install West
+      - name: Install West and Clone ZMK
         run: |
           pip3 install west
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
-
-      - name: Setup ZMK
-        run: |
-          west init zmk
+          git clone https://github.com/zmkfirmware/zmk.git zmk
           cd zmk
+          west init -l app/
           west update
           west zephyr-export
           pip3 install -r zephyr/scripts/requirements.txt
